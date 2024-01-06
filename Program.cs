@@ -1,3 +1,7 @@
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using WatchOut.Areas.Identity.Data;
+using WatchOut.Data;
 namespace WatchOut
 {
     public class Program
@@ -5,6 +9,11 @@ namespace WatchOut
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+            var connectionString = builder.Configuration.GetConnectionString("WatchOutContextConnection") ?? throw new InvalidOperationException("Connection string 'WatchOutContextConnection' not found.");
+
+            builder.Services.AddDbContext<WatchOutContext>(options => options.UseSqlServer(connectionString));
+
+            builder.Services.AddDefaultIdentity<WatchOutUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<WatchOutContext>();
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
@@ -29,6 +38,7 @@ namespace WatchOut
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
+            app.MapRazorPages();
 
             app.Run();
         }
