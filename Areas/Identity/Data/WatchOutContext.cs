@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using WatchOut.Areas.Identity.Data;
+using WatchOut.Models;
 
 namespace WatchOut.Data;
 
@@ -21,6 +22,8 @@ public class WatchOutContext : IdentityDbContext<WatchOutUser>
         // Add your customizations after calling base.OnModelCreating(builder);
         builder.ApplyConfiguration(new ApplicationUserEntityConfiguration());
     }
+
+public DbSet<WatchOut.Models.Watch> Watch { get; set; } = default!;
 
 }
 public class ApplicationUserEntityConfiguration : IEntityTypeConfiguration<WatchOutUser>

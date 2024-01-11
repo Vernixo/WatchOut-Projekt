@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using WatchOut.Areas.Identity.Data;
 using WatchOut.Data;
+using WatchOut.Models;
 namespace WatchOut
 {
     public class Program
@@ -19,6 +20,13 @@ namespace WatchOut
             builder.Services.AddControllersWithViews();
 
             var app = builder.Build();
+
+            using (var scope = app.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+
+                SeedData.Initialize(services);
+            }
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
