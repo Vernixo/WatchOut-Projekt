@@ -153,10 +153,13 @@ namespace WatchOut.Areas.Identity.Pages.Account
                         await _signInManager.SignInAsync(user, isPersistent: false);
                         return LocalRedirect(returnUrl);
                     }
-                }
-                foreach (var error in result.Errors)
+                }else
                 {
-                    ModelState.AddModelError(string.Empty, error.Description);
+                    foreach (var error in result.Errors)
+                    {
+                        _logger.LogError($"Error during registration: {error.Description}");
+                        ModelState.AddModelError(string.Empty, error.Description);
+                    }
                 }
             }
 
@@ -168,7 +171,14 @@ namespace WatchOut.Areas.Identity.Pages.Account
         {
             try
             {
-                return Activator.CreateInstance<WatchOutUser>();
+                var user = new WatchOutUser
+                {
+                    UserName = Input.Email, // Ustaw UserName na Email
+                    Email = Input.Email,
+                    Name = Input.Name,
+                    Surname = Input.Surname
+                };
+                return user;
             }
             catch
             {
@@ -177,6 +187,8 @@ namespace WatchOut.Areas.Identity.Pages.Account
                     $"override the register page in /Areas/Identity/Pages/Account/Register.cshtml");
             }
         }
+
+
 
         private IUserEmailStore<WatchOutUser> GetEmailStore()
         {
