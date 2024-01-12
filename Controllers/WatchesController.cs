@@ -18,7 +18,10 @@ namespace WatchOut.Controllers
         {
             _context = context;
         }
-
+        public async Task<IActionResult> Store()
+        {
+            return View(await _context.Watch.ToListAsync());
+        }
         // GET: Watches
         public async Task<IActionResult> Index()
         {

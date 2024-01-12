@@ -26,7 +26,7 @@ public static class SeedData
                     Name = "Bambino",
                     Price = 200,
                     Size = 40,
-                    UserGender = 1,
+                    UserGender = "Male",
                     Style = "Elegant",
                     Quantity = 15,
                     PhotoPath = ""
@@ -37,7 +37,7 @@ public static class SeedData
                     Name = "Open Heart Contemporary",
                     Price = 300,
                     Size = 42,
-                    UserGender = 1,
+                    UserGender = "Male",
                     Style = "Elegant",
                     Quantity = 10,
                     PhotoPath = ""
@@ -48,7 +48,7 @@ public static class SeedData
                     Name = "Cocktail Time",
                     Price = 500,
                     Size = 39,
-                    UserGender = 1,
+                    UserGender = "Male",
                     Style = "Elegant",
                     Quantity = 5,
                     PhotoPath = ""
@@ -59,7 +59,7 @@ public static class SeedData
                     Name = "5 Sports Automatic SKX Midi",
                     Price = 300,
                     Size = 38,
-                    UserGender = 1,
+                    UserGender = "Male",
                     Style = "Casual",
                     Quantity = 15,
                     PhotoPath = ""

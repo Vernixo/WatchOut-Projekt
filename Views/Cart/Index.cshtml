@@ -1,0 +1,34 @@
+﻿
+@{
+    ViewData["Title"] = "View";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model WatchOut.Models.ShoppingCart
+
+<h2>Koszyk</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nazwa</th>
+            <th>Cena</th>
+            <th>Ilość</th>
+            <th>Akcje</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Items)
+        {
+            <tr>
+                <td>@item.Watch.Name</td>
+                <td>@item.Watch.Price</td>
+                <td>@item.Quantity</td>
+                <td>
+                    <!-- Dodaj przyciski do aktualizacji ilości lub usunięcia przedmiotu -->
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<!-- Możesz dodać przycisk do realizacji zamówienia -->

@@ -268,8 +268,9 @@ namespace WatchOut.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UserGender")
-                        .HasColumnType("int");
+                    b.Property<string>("UserGender")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 

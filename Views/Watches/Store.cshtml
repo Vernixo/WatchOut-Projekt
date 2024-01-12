@@ -1,0 +1,82 @@
+﻿@{
+}
+@model IEnumerable<WatchOut.Models.Watch>
+
+@{
+    ViewData["Title"] = "Store";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Sklep</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Brand)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Size)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserGender)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Style)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Quantity)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.Id"><img src="@Url.Content(item.PhotoPath)" height="200px" width="200px" alt="Zegarek" asp-append-version="true" /></a>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Brand)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                    USD
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Size)
+                    mm
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserGender)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Style)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Quantity)
+                </td>
+                <td>
+                    <form asp-controller="Cart" asp-action="AddToCart" method="post">
+                        <input type="hidden" name="id" value="@item.Id" />
+                        <input type="hidden" name="quantity" value="1" /> <!-- Ustawienie domyślnej ilości -->
+                        <input type="submit" value="Dodaj do koszyka" class="btn btn-primary" />
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

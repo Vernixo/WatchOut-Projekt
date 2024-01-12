@@ -63,7 +63,7 @@ namespace WatchOut.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Price = table.Column<int>(type: "int", nullable: false),
                     Size = table.Column<int>(type: "int", nullable: false),
-                    UserGender = table.Column<int>(type: "int", nullable: false),
+                    UserGender = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Style = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false),
                     PhotoPath = table.Column<string>(type: "nvarchar(max)", nullable: false)

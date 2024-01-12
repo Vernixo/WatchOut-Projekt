@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using WatchOut.Areas.Identity.Data;
 using WatchOut.Data;
 using WatchOut.Models;
+using System;
+
 namespace WatchOut
 {
     public class Program
@@ -10,37 +12,44 @@ namespace WatchOut
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            // Konfiguracja po³¹czenia i us³ug
             var connectionString = builder.Configuration.GetConnectionString("WatchOutContextConnection") ?? throw new InvalidOperationException("Connection string 'WatchOutContextConnection' not found.");
-
             builder.Services.AddDbContext<WatchOutContext>(options => options.UseSqlServer(connectionString));
+            builder.Services.AddDefaultIdentity<WatchOutUser>(options => options.SignIn.RequireConfirmedAccount = false).AddEntityFrameworkStores<WatchOutContext>();
 
-            builder.Services.AddDefaultIdentity<WatchOutUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<WatchOutContext>();
+            // Konfiguracja sesji
+            builder.Services.AddDistributedMemoryCache();
+            builder.Services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(30);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
 
-            // Add services to the container.
+            // Dodaj kontrolery i widoki
             builder.Services.AddControllersWithViews();
 
             var app = builder.Build();
 
+            // Inicjalizacja danych (jeœli jest potrzebna)
             using (var scope = app.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
-
                 SeedData.Initialize(services);
             }
 
-            // Configure the HTTP request pipeline.
+            // Konfiguracja middleware
             if (!app.Environment.IsDevelopment())
             {
                 app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            app.UseSession(); // Upewnij siê, ¿e ta linia jest przed UseRouting()
             app.UseRouting();
-
             app.UseAuthorization();
 
             app.MapControllerRoute(

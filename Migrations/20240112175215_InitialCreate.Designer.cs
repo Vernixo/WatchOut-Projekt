@@ -12,7 +12,7 @@ using WatchOut.Data;
 namespace WatchOut.Migrations
 {
     [DbContext(typeof(WatchOutContext))]
-    [Migration("20240112104552_InitialCreate")]
+    [Migration("20240112175215_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -271,8 +271,9 @@ namespace WatchOut.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UserGender")
-                        .HasColumnType("int");
+                    b.Property<string>("UserGender")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
