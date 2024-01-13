@@ -29,16 +29,13 @@
 
         public void AddItem(Watch watch, int quantity)
         {
-            // Sprawdź, czy produkt już istnieje w koszyku
             var existingItem = Items.FirstOrDefault(i => i.Watch.Id == watch.Id);
             if (existingItem != null)
             {
-                // Jeśli tak, zwiększ ilość
                 existingItem.Quantity += quantity;
             }
             else
             {
-                // Jeśli nie, dodaj nowy element do koszyka
                 Items.Add(new CartItem { Watch = watch, Quantity = quantity });
             }
         }
@@ -54,8 +51,6 @@
         {
             return Items.Sum(item => item.Watch.Price * item.Quantity);
         }
-
-        // Możesz dodać więcej metod, np. do usunięcia elementu, aktualizacji ilości itd.
     }
 
 

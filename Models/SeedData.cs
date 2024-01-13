@@ -14,10 +14,9 @@ public static class SeedData
             serviceProvider.GetRequiredService<
                 DbContextOptions<WatchOutContext>>()))
         {
-            // Look for any movies.
             if (context.Watch.Any())
             {
-                return;   // DB has been seeded
+                return;
             }
             context.Watch.AddRange(
                 new Watch
