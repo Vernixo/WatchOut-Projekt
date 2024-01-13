@@ -42,6 +42,18 @@
                 Items.Add(new CartItem { Watch = watch, Quantity = quantity });
             }
         }
+        public void RemoveItem(int watchId)
+        {
+            var item = Items.FirstOrDefault(i => i.Watch.Id == watchId);
+            if (item != null)
+            {
+                Items.Remove(item);
+            }
+        }
+        public decimal TotalPrice()
+        {
+            return Items.Sum(item => item.Watch.Price * item.Quantity);
+        }
 
         // Możesz dodać więcej metod, np. do usunięcia elementu, aktualizacji ilości itd.
     }

@@ -22,7 +22,6 @@ namespace WatchOut.Controllers
         }
 
         [HttpPost]
-        [HttpPost]
         public IActionResult AddToCart(int id, int quantity = 1)
         {
             var watch = _context.Watch.Find(id); // Upewnij się, że to jest prawidłowa nazwa kolekcji
@@ -34,9 +33,13 @@ namespace WatchOut.Controllers
             }
             return RedirectToAction("Index");
         }
-
-
-
+        public IActionResult RemoveFromCart(int watchId)
+        {
+            var cart = GetCart();
+            cart.RemoveItem(watchId);
+            SaveCart(cart);
+            return RedirectToAction("Index");
+        }
         private ShoppingCart GetCart()
         {
             // Pobierz koszyk z sesji lub utwórz nowy jeśli nie istnieje
