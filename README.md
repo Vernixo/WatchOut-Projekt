@@ -13,3 +13,5 @@ Aplikacja przeniesie wtedy użytkownika automatycznie do widoku koszyka, gdzie m
 Po skorzystaniu z przycisku finalizacja użytkownik przechodzi do uzupełniania danych do faktury oraz dostawy
 
 Użytkownik z uprawnieniami administratora ma dodatkowo możliwość dodawać zegarki na stan sklepu, a także edytować ich właściwości
+
+Autor: Mateusz Michalik 14570
