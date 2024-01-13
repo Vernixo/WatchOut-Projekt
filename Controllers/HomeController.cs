@@ -16,7 +16,10 @@ namespace WatchOut.Controllers
             _logger = logger;
             _userManager = userManager;
         }
-
+        public IActionResult Cart()
+        {
+            return View();
+        }
 
         public async Task<IActionResult> Index()
         {
