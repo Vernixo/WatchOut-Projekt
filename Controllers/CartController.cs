@@ -18,7 +18,7 @@ namespace WatchOut.Controllers
         public IActionResult Index()
         {
             var cart = GetCart();
-            return View(cart); // Przekazuje obiekt typu ShoppingCart do widoku
+            return View(cart);
         }
         
         public IActionResult Checkout()
@@ -29,11 +29,11 @@ namespace WatchOut.Controllers
         [HttpPost]
         public IActionResult AddToCart(int id, int quantity = 1)
         {
-            var watch = _context.Watch.Find(id); // Upewnij się, że to jest prawidłowa nazwa kolekcji
+            var watch = _context.Watch.Find(id);
             if (watch != null && quantity > 0)
             {
                 var cart = GetCart();
-                cart.AddItem(watch, quantity); // Tutaj przekazujesz 'watch' i 'quantity'
+                cart.AddItem(watch, quantity);
                 SaveCart(cart);
             }
             return RedirectToAction("Index");
@@ -47,57 +47,57 @@ namespace WatchOut.Controllers
         }
         private ShoppingCart GetCart()
         {
-            // Pobierz koszyk z sesji lub utwórz nowy jeśli nie istnieje
             var cart = HttpContext.Session.GetObjectFromJson<ShoppingCart>("Cart") ?? new ShoppingCart();
             return cart;
         }
 
         private void SaveCart(ShoppingCart cart)
         {
-            // Zapisz koszyk do sesji
             HttpContext.Session.SetObjectAsJson("Cart", cart);
         }
-        [HttpPost]
-        public IActionResult ProcessCheckout(Watch model)
+        public IActionResult OrderSuccessful()
         {
-            if (ModelState.IsValid)
-            {
-                var cart = GetCart();
-                bool isUpdatedSuccessfully = UpdateProductQuantities(cart);
-
-                if (isUpdatedSuccessfully)
-                {
-                    // Logika finalizacji zakupu (np. zapisanie zamówienia, wysłanie potwierdzenia itp.)
-                    return RedirectToAction("OrderConfirmation");
-                }
-                else
-                {
-                    // Obsługa sytuacji, gdy nie udało się zaktualizować ilości (np. produkt niedostępny)
-                }
-            }
-
-            return View(model);
+            return View("OrderSuccessful");
         }
         [HttpPost]
-        public bool UpdateProductQuantities(ShoppingCart cart)
+        //public IActionResult ProcessCheckout(Watch model)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        var cart = GetCart();
+        //        bool isUpdatedSuccessfully = UpdateProductQuantities(cart);
+
+        //        if (isUpdatedSuccessfully)
+        //        {
+        //            return RedirectToAction("OrderSuccessful");
+        //        }
+        //        else
+        //        {
+                    
+        //        }
+        //    }
+
+        //    return View(model);
+        //}
+        [HttpPost]
+        public IActionResult UpdateProductQuantities(ShoppingCart cart)
         {
             foreach (var item in cart.Items)
             {
                 var product = _context.Watch.FirstOrDefault(w => w.Id == item.Watch.Id);
                 if (product != null && product.Quantity >= item.Quantity)
                 {
-                    product.Quantity -= item.Quantity; // Zmniejszenie ilości
+                    product.Quantity -= item.Quantity;
                     _context.Update(product);
                 }
                 else
                 {
-                    // Obsługa sytuacji, gdy produkt jest niedostępny lub ilość jest niewystarczająca
-                    return false;
+                    
                 }
             }
 
             _context.SaveChanges();
-            return true;
+            return RedirectToAction("OrderSuccessful");
         }
 
 
