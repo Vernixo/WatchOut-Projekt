@@ -1,4 +1,7 @@
 ﻿<!DOCTYPE html>
+@{
+    var isAdmin = ViewData["IsAdmin"] as bool? ?? false;
+}
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -22,6 +25,12 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Watches" asp-action="Store">Watches</a>
                         </li>
+                        @if (isAdmin)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Watches" asp-action="Index">Edycja Listy</a>
+                            </li>
+                        }
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>

@@ -1,0 +1,82 @@
+﻿@{
+    ViewData["Title"] = "Checkout";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Checkout</h2>
+
+<form asp-controller="Cart" asp-action="UpdateProductQuantities" method="post">
+    <h4>Dane do faktury</h4>
+    <div>
+        <label>Imię:</label>
+        <br />
+        <input type="text" name="FirstName" pattern="[a-zA-Z\s-]" required />
+    </div>
+    <div>
+        <label>Nazwisko:</label>
+        <br />
+        <input type="text" name="LastName" pattern="[a-zA-Z\s-]" required />
+    </div>
+    <div>
+        <label>Numer Telefonu:</label>
+        <br />
+        <input type="tel" name="phone" pattern="\+?[0-9\s\-()]{9}" required />
+    </div>
+
+    <div>
+        <label>Adres Email:</label>
+        <br />
+        <input type="email" name="Email" required />
+    </div>
+    <h4>Dane adresowe</h4>
+    <div>
+        <label>Ulica:</label>
+        <br />
+        <input type="text" name="Street" required />
+    </div>
+    <div>
+        <label>Nr domu:</label>
+        <br />
+        <input type="text" name="HouseNumber" required />
+    </div>
+    <div>
+        <label>Nr mieszkania:</label>
+        <br />
+        <input type="text" name="ApartmentNumber" />
+    </div>
+    <div>
+        <label>Kod pocztowy:</label>
+        <br />
+        <input type="text" id="postalCode" name="PostalCode" pattern="\d{2}-\d{3}" title="Kod pocztowy musi być w formacie XX-XXX, gdzie X to cyfra." required />
+    </div>
+    <div>
+        <label>Miasto:</label>
+        <br />
+        <input type="text" name="City" pattern="[a-zA-Z\s-]" required />
+    </div>
+    <div>
+        <label>Kraj:</label>
+        <br />
+        <select name="country" id="country">
+            <option value="Polska">Polska</option>
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-secondary">Dokonaj zakupu</button>
+
+</form>
+<a asp-controller="Cart" asp-action="Index" class="btn btn-secondary">Wróć do koszyka</a>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var postalCodeInput = document.getElementById('postalCode');
+
+        postalCodeInput.addEventListener('input', function () {
+            var value = postalCodeInput.value;
+            if (value.length === 2 && !value.includes('-')) {
+                postalCodeInput.value = value + '-';
+            }
+        });
+    });
+</script>
+
